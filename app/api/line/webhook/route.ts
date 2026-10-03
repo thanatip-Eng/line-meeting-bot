@@ -25,7 +25,9 @@ export async function POST(req: Request) {
   return new Response("OK", { status: 200 });
 }
 
-async function handleEvent(event: any) {
+type LineEvent = { type: string; replyToken: string; message: { type: string; text: string } };
+
+async function handleEvent(event: LineEvent) {
   if (event.type !== "message" || event.message.type !== "text") return;
 
   await fetch("https://api.line.me/v2/bot/message/reply", {

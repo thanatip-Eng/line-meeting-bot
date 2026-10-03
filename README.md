@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# คิวงาน + LINE meeting bot
 
-## Getting Started
+Next.js 16 บน Vercel
 
-First, run the development server:
+- `/` — เว็บแอป "คิวงาน" (แอดลง Home Screen ของ iPhone ได้)
+  - **ว่างไหม** — เช็กวันเวลาที่มีคนถาม เทียบกับปฏิทิน Outlook ได้ข้อความตอบกลับ และปุ่มเปิดฟอร์มลงนัดใน Outlook
+  - **เสนอเวลา** — หาช่วงว่างในช่วงวันที่ ติ๊กเลือก คัดลอกข้อความ และกันช่วงที่เสนอไว้ไม่ให้เสนอซ้ำ
+  - **Teamup** — ส่งช่วงว่างเข้าปฏิทิน Teamup ที่ได้รับลิงก์มาผ่าน Teamup API
+- `/api/line/webhook` — LINE bot (เฟส 2)
+
+## ตัวแปรใน Vercel (Settings → Environment Variables)
+
+| ชื่อ | ค่า |
+| --- | --- |
+| `ICS_URL` | ลิงก์ ICS ที่เผยแพร่จาก Outlook (เก็บเป็นความลับ) |
+| `APP_PIN` | PIN สำหรับเข้าแอป อย่างน้อย 6 ตัว |
+| `TEAMUP_API_KEY` | API key ของ Teamup ขอฟรีที่ https://teamup.com/api-keys/request |
+| `LINE_CHANNEL_SECRET`, `LINE_CHANNEL_ACCESS_TOKEN` | ของ LINE bot เดิม |
+
+## ข้อจำกัด
+
+- อ่านปฏิทินจาก ICS ที่ Outlook เผยแพร่ นัดที่เพิ่งลงอาจยังไม่ขึ้นทันที
+- ช่องที่กันไว้และการตั้งค่าเก็บในเครื่องแต่ละเครื่อง (localStorage)
+
+## พัฒนาในเครื่อง
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+ICS_URL=... APP_PIN=... npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
